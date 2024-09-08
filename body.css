@@ -1,0 +1,73 @@
+body {
+    background-image: url('r3.jpg');
+    background-repeat: repeat;
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* توسيط المحتوى أفقيًا */
+}
+
+form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+button:hover {
+    background-color: black;
+    color: wheat;
+}
+
+progress {
+    height: 20px;
+    width: 80%; /* عرض شريط التقدم */
+    max-width: 400px; /* الحد الأقصى للعرض */
+    margin: 10px auto;
+    -webkit-appearance: none;
+    appearance: none;
+    
+}
+
+progress::-webkit-progress-bar {
+    background: #eee;
+    border-radius: 10px;
+}
+
+progress::-webkit-progress-value {
+    background: #007bff;
+}
+
+#completionMessage {
+    text-align: center;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    display: none; /* إخفاء الرسالة بشكل افتراضي */
+    margin-top: 20px;
+}

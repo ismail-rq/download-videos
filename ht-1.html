@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Download videos from Facebook, Instagram, TikTok, and YouTube with ease using our simple platform. Just paste the video link, choose your preferred format, and get your content in seconds. Enjoy fast, secure, and high-quality downloads anytime!">
+    <title>Download Media</title>
+    <link rel="stylesheet" href="body.css">
+    <link rel="icon" href="icon1.jfif" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <h1>Media Downloader</h1>
+    </header>
+    <main>
+        <form id="downloadForm">
+            <label for="url">Enter URL:</label>
+            <input type="text" id="url" name="url" placeholder="Paste URL here" required>
+            <button type="submit">Download</button>
+        </form>
+
+        <!-- شريط التقدم -->
+        <progress id="progressBar" value="0" max="100" style="width:100%;"></progress>
+        <div id="progressText">Progress: 0%</div>
+        <div id="completionMessage" style="display:none;">Download Completed!</div>
+
+        <div id="result"></div>
+    </main>
+    <script>
+        document.getElementById('downloadForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const url = document.getElementById('url').value;
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const completionMessage = document.getElementById('completionMessage');
+
+            progressBar.value = 0;
+            progressText.innerText = 'Progress: 0%';
+            completionMessage.style.display = 'none';
+
+            try {
+                const response = await fetch('/download', {
+                    method: 'POST',
+                    body: new URLSearchParams({ url }),
+                });
+
+                if (response.ok) {
+                    // Simulate progress
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        if (progress >= 100) {
+                            clearInterval(interval);
+                            completionMessage.style.display = 'block';
+                        } else {
+                            progress += 10;
+                            progressBar.value = progress;
+                            progressText.innerText = `Progress: ${progress}%`;
+                        }
+                    }, 500);
+                    
+                    // Download the file after completion
+                    const blob = await response.blob();
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'downloaded_video.mp4';
+                    link.click();
+                } else {
+                    alert('Failed to download video.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
